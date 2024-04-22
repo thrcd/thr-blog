@@ -1,0 +1,27 @@
+{{define "content"}}
+    <div class="post-date">
+        <img style="vertical-align:middle" src="/static/img/calendar.svg" width="15">
+        {{humanDate .Markdown.Metadata.Date}}
+    </div>
+
+
+    {{with .Markdown.Metadata.Tags}}
+        <div class="post-tags">
+            <span>
+                {{range $i, $tag := .}}
+                <i>
+                    <img style="vertical-align:middle" src="/static/img/tag.svg" width="12">
+                    {{$tag}}<br>
+                </i>
+                {{end}}
+            </span>
+        </div>
+    {{end}}
+
+
+
+    <div class="post">
+        <h4>{{.Markdown.Metadata.Title}}</h4>
+        {{.Markdown.Body}}
+    </div>
+{{end}}

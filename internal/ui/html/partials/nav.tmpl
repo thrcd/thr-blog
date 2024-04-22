@@ -1,0 +1,40 @@
+{{define "nav"}}
+   <nav>
+      <div >
+<pre class="smile">
+    {{if .Error}}
+        ╔═══════╗
+        ║  :-|  ║
+        ╚═══════╝
+    {{else}}
+        ╔═══════╗
+        ║  :-)  ║
+        ╚═══════╝
+    {{end}}
+╔═══════════════╗
+║     ( (       ║
+║      ) )      ║
+║   .______.    ║
+║   |      |]   ║
+║   |      | ]  ║
+║   '------'    ║
+╚═══════════════╝
+</pre>
+         <h2><a href="/">Thr.cd (blog)</a></h2>
+         <div class="nav-sub">
+             <span class="nav-sub-title">
+                 Sometimes I write <s>and post</s> about eng., software, go and life.
+             </span>
+         </div>
+      </div>
+
+      <div class="nav-links">
+         <a href="/"><img style="vertical-align:middle"
+                                                          src="/static/img/hash.svg" width="15"> posts</a>
+
+         <a href="/about" ><img style="vertical-align:middle"
+                                                          src="/static/img/hubot.svg" width="15"> about</a>
+      </div>
+   </nav>
+   <hr>
+{{end}}

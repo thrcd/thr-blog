@@ -1,0 +1,27 @@
+{{define "content"}}
+    <div class="page-title">
+        <strong>Posts</strong>
+    </div>
+
+    <div>
+        {{range $year := .Dirs}}
+            <div class="post-list-section">
+                <img style="vertical-align:middle" src="../static/img/calendar.png" width="20">
+                <strong style="vertical-align:middle">{{$year}}</strong>
+            </div>
+
+            {{range $post := index $.PostListItems $year}}
+                <div >
+                    <div class="post-list-item-title post-list-inline">
+                        <a href="/post/{{$year}}/{{cleanMarkdownExt $post.Filename}}"><img style="vertical-align:middle" src="../static/img/pulse.svg" width="10"> {{lowcase $post.Metadata.Title}}</a>
+                    </div>
+
+                    <span class="post-list-item-date post-list-inline">- {{humanDate $post.Metadata.Date}}</span>
+                </div>
+            {{end}}
+
+        {{end}}
+
+    </div>
+
+{{end}}

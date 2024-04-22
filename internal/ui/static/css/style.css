@@ -1,0 +1,171 @@
+body {
+    /*margin: 0px;*/
+    font-family: "Roboto", sans-serif;
+    color: #232323;
+
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+    text-align: center;
+}
+
+/* Nav */
+nav {
+    margin: 0 auto;
+    text-align: center;
+}
+
+nav > .nav-links {
+    margin-top: 10px;
+}
+
+nav > .nav-links > a {
+    text-decoration: none;
+    color: black;
+    padding: 0px 10px 0px 10px;
+}
+
+nav > .nav-links > a:hover {
+    color: #7e7e7e;
+}
+
+nav > .nav-links > a > img:hover {
+    color: #7e7e7e;
+}
+
+nav > div > h2 > a {
+    color: #232323;
+    text-decoration: none;
+}
+
+hr {
+    width: 60%;
+    border: none;
+    height: 0.5px;
+    /* Set the hr color */
+    background-color: #b0b0b0;  /* Modern Browsers */
+}
+
+
+/* Content */
+main {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    color: #232323;
+}
+
+.content {
+    text-align: left;
+}
+
+.content > .page-section {
+    margin: 20px 0px 20px 0px;
+}
+
+.post-list-inline {
+    display: inline-block;
+}
+
+.post-list-section {
+    margin-top: 30px;
+}
+
+.post-list-item-title {
+    margin-top: 10px;
+    color: #dadada;
+    text-decoration: underline;
+}
+
+.post-list-item-title > a {
+    /*color: inherit;;*/
+    /*text-decoration: none; !* no underline *!*/
+    color: #232323;
+    text-decoration: none;
+}
+
+.post-list-item-title > a:hover {
+    color: #7e7e7e;
+    text-decoration: none;
+}
+
+.post-list-item-date {
+    font-size: 12px;
+    color: #b0b0b0;
+}
+
+.return > a {
+    font-size: 14px;
+    color: #2c2c2c;
+}
+
+.return > a:hover {
+    color: #7e7e7e;
+    text-decoration: none;
+}
+
+.post-date {
+    font-size: 14px;
+    margin-top: 20px;
+    color: #919191;
+}
+
+.post-tags {
+    margin-top: 10px;
+    color: #919191;
+    font-size: 14px;
+}
+
+.smile > pre  {
+    background-color: rgb(255, 255, 255);
+    padding: 0px 0px 0px 00px;
+}
+
+
+pre:not(:has(> code)) {
+    background-color: rgb(255, 255, 255);
+    padding: 0;
+}
+
+pre  {
+    background-color: rgba(232, 232, 232, 0.44);
+    padding: 10px 10px 10px 10px;
+    /*white-space: pre-wrap;*/
+    overflow-x: scroll;
+}
+
+.empty-content {
+    text-align: center;
+}
+
+.error-content {
+    text-align: center;
+    color: #232323;
+}
+
+.about-social-links > div > a {
+    text-decoration: none;
+    color: #232323;
+    padding-bottom: 5px;
+    font-size: 14px;
+}
+
+.about-social-links > div > a:hover {
+    color: #7e7e7e;
+    margin-top: 10px;
+}
+
+@media (max-width:600px) {
+    hr {
+        width: 90%;
+    }
+
+    main {
+        width: 90%;
+    }
+}
