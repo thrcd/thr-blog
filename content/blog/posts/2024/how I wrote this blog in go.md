@@ -57,7 +57,7 @@ The blog is divided into four main sections:
 ---------- parser, ui -----------
 ```
 
-##### parser and ui
+### parser and ui
 
 I'll start from the bottom up. The ui folder houses all the Go template files (.tmpl), CSS, and images. The [embed](https://pkg.go.dev/embed) package simplifies handling these files.
 
@@ -109,7 +109,7 @@ func ParseMarkdown(b []byte) (Markdown, error)
 
 _I won't paste the implementation here; otherwise, this post would become much longer than I'd like. But you can check them out in the repo._
 
-##### helpers
+### helpers
 
 There's no need to overcomplicate things; remember, less is more, so let's keep it simple. I have a file called helpers.go that contains a few helper functions to construct the data used by the templates. Let's go through those.
 
@@ -146,7 +146,7 @@ func getMarkdown(filePath string) (parser.Markdown, error)
 
 These functions manage the entire data flow from the `.md` files to the Go templates.
 
-##### handlers
+### handlers
 
 I've got three handlers: one for handling posts on the homepage, another for individual posts, and one for the about page.
 
@@ -229,7 +229,7 @@ func routes() http.Handler {
 }
 ```
 
-##### server
+### server
 
 Finally, on main.go I create a straightforward server that does exactly what I need. It begins listening and serving.
 
