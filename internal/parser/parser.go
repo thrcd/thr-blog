@@ -85,13 +85,11 @@ func ParseMarkdown(b []byte) (Markdown, error) {
 
 		markdown.Metadata = ParseMetadata(b)
 
-		// Scans the file, skipping the metadata and writing everything that is non-meta to the buffer.
-		// This was added to separate the markdown file into two parts: Metadata and actual Markdown.
-		// Goldmark's library has an option to return metadata, but I couldn't make it work with the TOML format.
-		// Additionally, I found that this approach offers slightly better performance (which doesn't matter in this case).
 		reader := bytes.NewReader(b)
 		scanner := bufio.NewScanner(reader)
 
+		// Scans the files and increments the lastDelimIndex counter until it finds the last occurrence of "+++".
+		// This counter will be used to skip over the metadata when parsing the markdown.
 		for i := 0; scanner.Scan(); i++ {
 			line = bytes.TrimSpace(scanner.Bytes())
 
@@ -115,7 +113,6 @@ func ParseMarkdown(b []byte) (Markdown, error) {
 		}
 	}
 
-	// Uses goldmark lib to parse the remain markdown.
 	var bodyBuf bytes.Buffer
 	if buf.Len() == 0 {
 		buf.Write(b)
