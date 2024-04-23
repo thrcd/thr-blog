@@ -25,9 +25,8 @@ func TestParseMarkdown(t *testing.T) {
 			if err != nil {
 				testkit.ErrorT(t, "Should parse markdown input. [%s]", err)
 			}
-			t.Log(htmlFromFileWithMeta)
-			received := strings.Trim(htmlFromFileWithMeta.Body, "\n")
-			testkit.Check(t, strings.Contains(received, want), "Should contain %s.", want)
+
+			testkit.Check(t, strings.Contains(htmlFromFileWithMeta.Body, want), "Should contain %s.", want)
 		}
 
 		t.Logf("Test 1:\tWhen parsing markdown without metada")
@@ -44,8 +43,7 @@ func TestParseMarkdown(t *testing.T) {
 				testkit.ErrorT(t, "Should parse markdown input. [%s]", err)
 			}
 
-			received := strings.Trim(htmlFromFileWithoutMeta.Body, "\n")
-			testkit.Check(t, strings.Contains(received, want), "Should contain html %s.", want)
+			testkit.Check(t, strings.Contains(htmlFromFileWithoutMeta.Body, want), "Should contain html %s.", want)
 		}
 
 		t.Logf("Test 2:\tWhen parsing empty markdown")
@@ -57,9 +55,8 @@ func TestParseMarkdown(t *testing.T) {
 				testkit.ErrorT(t, "Should parse markdown input. [%s]", err)
 			}
 
-			received := strings.Trim(htmlEmpty.Body, "\n")
-			successArgs := []any{"", received}
-			testkit.Check(t, received == "", "Should return html %s. Received: %s", successArgs...)
+			successArgs := []any{"", htmlEmpty.Body}
+			testkit.Check(t, htmlEmpty.Body == "", "Should return html %s. Received: %s", successArgs...)
 		}
 	}
 }

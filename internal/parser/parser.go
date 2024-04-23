@@ -3,7 +3,6 @@ package parser
 import (
 	"bufio"
 	"bytes"
-	"fmt"
 	"github.com/russross/blackfriday/v2"
 	"regexp"
 	"strings"
@@ -72,32 +71,27 @@ func ParseMetadata(b []byte) Metadata {
 	return metadata
 }
 
-func ParseMarkdown(b []byte) (Markdown, error) {
+func ParseMarkdown(file []byte) (Markdown, error) {
 	var markdown Markdown
 	var buf bytes.Buffer
 
 	// Checks if file has metadata. If positive, it parses the metadata and assign to markdown.
-	if len(b) != 0 && metaDelimReg.Match(b[:1]) {
+	if len(file) != 0 && metaDelimReg.Match(file[:1]) {
 		//var inMetadata bool
 		var line []byte
 		var lastDelimIndex int
+		var metaDelimCounter int
 
-		metaDelimCounter := 0
+		markdown.Metadata = ParseMetadata(file)
 
-		markdown.Metadata = ParseMetadata(b)
-
-		reader := bytes.NewReader(b)
+		reader := bytes.NewReader(file)
 		scanner := bufio.NewScanner(reader)
 
 		// Scans the files and increments the lastDelimIndex counter until it finds the last occurrence of "+++".
 		// This counter will be used to skip over the metadata when parsing the markdown.
 		for i := 0; scanner.Scan(); i++ {
 			line = bytes.TrimSpace(scanner.Bytes())
-
-			for i := 0; i < len(line); i++ {
-				lastDelimIndex++
-				fmt.Println(lastDelimIndex)
-			}
+			lastDelimIndex += len(line) + len("\n")
 
 			if metaDelimReg.Match(line) {
 				metaDelimCounter++
@@ -108,7 +102,8 @@ func ParseMarkdown(b []byte) (Markdown, error) {
 			}
 		}
 
-		b = b[lastDelimIndex+1:]
+		// File now has only the markdown content without metadata
+		file = file[lastDelimIndex:]
 
 		if err := scanner.Err(); err != nil { // Checked scanner error
 			return Markdown{}, err
@@ -117,10 +112,10 @@ func ParseMarkdown(b []byte) (Markdown, error) {
 
 	var bodyBuf bytes.Buffer
 	if buf.Len() == 0 {
-		buf.Write(b)
+		buf.Write(file)
 	}
 
-	md := blackfriday.Run(b)
+	md := blackfriday.Run(file)
 	bodyBuf.Write(md)
 	markdown.Body = bodyBuf.String()
 
