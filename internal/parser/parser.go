@@ -3,6 +3,7 @@ package parser
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"github.com/russross/blackfriday/v2"
 	"regexp"
 	"strings"
@@ -95,6 +96,7 @@ func ParseMarkdown(b []byte) (Markdown, error) {
 
 			for i := 0; i < len(line); i++ {
 				lastDelimIndex++
+				fmt.Println(lastDelimIndex)
 			}
 
 			if metaDelimReg.Match(line) {
@@ -106,7 +108,7 @@ func ParseMarkdown(b []byte) (Markdown, error) {
 			}
 		}
 
-		b = b[lastDelimIndex+4:]
+		b = b[lastDelimIndex+1:]
 
 		if err := scanner.Err(); err != nil { // Checked scanner error
 			return Markdown{}, err

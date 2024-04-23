@@ -11,38 +11,41 @@ import (
 func TestParseMarkdown(t *testing.T) {
 	t.Log("Testing Markdown parsing.")
 	{
-		fileWithMeta, err := blog.Cfs.ReadFile("content/test/posts/2024/lorem-Ipsum.md")
-		if err != nil {
-			testkit.ErrorT(t, "Should read file with metadata. Got Error: %v", err)
-		}
-
-		fileWithoutMeta, err := blog.Cfs.ReadFile("content/test/posts/2024/lorem-Ipsum.md")
-		if err != nil {
-			testkit.ErrorT(t, "Should read file with metadata. Got Error: %v", err)
-		}
-
-		want := "<h3>lorem ipsum</h3>"
 
 		t.Logf("Test 0:\tWhen parsing markdown with metadata")
 		{
+			want := "<h3>lorem ipsum</h3>"
+
+			fileWithMeta, err := blog.Cfs.ReadFile("content/test/posts/2024/lorem-Ipsum.md")
+			if err != nil {
+				testkit.ErrorT(t, "Should read file with metadata. Got Error: %v", err)
+			}
+
 			htmlFromFileWithMeta, err := ParseMarkdown(fileWithMeta)
 			if err != nil {
 				testkit.ErrorT(t, "Should parse markdown input. [%s]", err)
 			}
-
+			t.Log(htmlFromFileWithMeta)
 			received := strings.Trim(htmlFromFileWithMeta.Body, "\n")
 			testkit.Check(t, strings.Contains(received, want), "Should contain %s.", want)
 		}
 
 		t.Logf("Test 1:\tWhen parsing markdown without metada")
 		{
+			want := "<h3>lorem ipsum 2</h3>"
+
+			fileWithoutMeta, err := blog.Cfs.ReadFile("content/test/posts/2024/lorem-Ipsum-2.md")
+			if err != nil {
+				testkit.ErrorT(t, "Should read file with metadata. Got Error: %v", err)
+			}
+
 			htmlFromFileWithoutMeta, err := ParseMarkdown(fileWithoutMeta)
 			if err != nil {
 				testkit.ErrorT(t, "Should parse markdown input. [%s]", err)
 			}
 
 			received := strings.Trim(htmlFromFileWithoutMeta.Body, "\n")
-			testkit.Check(t, strings.Contains(received, want), "Should return html %s.", want)
+			testkit.Check(t, strings.Contains(received, want), "Should contain html %s.", want)
 		}
 
 		t.Logf("Test 2:\tWhen parsing empty markdown")
