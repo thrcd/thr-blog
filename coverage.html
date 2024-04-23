@@ -551,35 +551,29 @@ func ParseMetadata(b []byte) Metadata <span class="cov8" title="1">{
         <span class="cov8" title="1">return metadata</span>
 }
 
-func ParseMarkdown(b []byte) (Markdown, error) <span class="cov8" title="1">{
+func ParseMarkdown(file []byte) (Markdown, error) <span class="cov8" title="1">{
         var markdown Markdown
         var buf bytes.Buffer
 
         // Checks if file has metadata. If positive, it parses the metadata and assign to markdown.
-        if len(b) != 0 &amp;&amp; metaDelimReg.Match(b[:1]) </span><span class="cov8" title="1">{
+        if len(file) != 0 &amp;&amp; metaDelimReg.Match(file[:1]) </span><span class="cov8" title="1">{
                 //var inMetadata bool
                 var line []byte
                 var lastDelimIndex int
+                var metaDelimCounter int
 
-                metaDelimCounter := 0
+                markdown.Metadata = ParseMetadata(file)
 
-                markdown.Metadata = ParseMetadata(b)
-
-                // Scans the file, skipping the metadata and writing everything that is non-meta to the buffer.
-                // This was added to separate the markdown file into two parts: Metadata and actual Markdown.
-                // Goldmark's library has an option to return metadata, but I couldn't make it work with the TOML format.
-                // Additionally, I found that this approach offers slightly better performance (which doesn't matter in this case).
-                reader := bytes.NewReader(b)
+                reader := bytes.NewReader(file)
                 scanner := bufio.NewScanner(reader)
 
+                // Scans the files and increments the lastDelimIndex counter until it finds the last occurrence of "+++".
+                // This counter will be used to skip over the metadata when parsing the markdown.
                 for i := 0; scanner.Scan(); i++ </span><span class="cov8" title="1">{
                         line = bytes.TrimSpace(scanner.Bytes())
+                        lastDelimIndex += len(line) + len("\n")
 
-                        for i := 0; i &lt; len(line); i++ </span><span class="cov8" title="1">{
-                                lastDelimIndex++
-                        }</span>
-
-                        <span class="cov8" title="1">if metaDelimReg.Match(line) </span><span class="cov8" title="1">{
+                        if metaDelimReg.Match(line) </span><span class="cov8" title="1">{
                                 metaDelimCounter++
                         }</span>
 
@@ -588,20 +582,20 @@ func ParseMarkdown(b []byte) (Markdown, error) <span class="cov8" title="1">{
                         }
                 }
 
-                <span class="cov8" title="1">b = b[lastDelimIndex+4:]
+                // File now has only the markdown content without metadata
+                <span class="cov8" title="1">file = file[lastDelimIndex:]
 
                 if err := scanner.Err(); err != nil </span><span class="cov0" title="0">{ // Checked scanner error
                         return Markdown{}, err
                 }</span>
         }
 
-        // Uses goldmark lib to parse the remain markdown.
         <span class="cov8" title="1">var bodyBuf bytes.Buffer
         if buf.Len() == 0 </span><span class="cov8" title="1">{
-                buf.Write(b)
+                buf.Write(file)
         }</span>
 
-        <span class="cov8" title="1">md := blackfriday.Run(b)
+        <span class="cov8" title="1">md := blackfriday.Run(file)
         bodyBuf.Write(md)
         markdown.Body = bodyBuf.String()
 
