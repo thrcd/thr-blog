@@ -288,7 +288,8 @@ import (
         "time"
 )
 
-const postsFS = "content/blog/posts"
+const techPostsFS = "content/blog/tech"
+
 const blogFS = "content/blog"
 
 func main() <span class="cov0" title="0">{
@@ -335,8 +336,8 @@ func routes() http.Handler <span class="cov0" title="0">{
                 http.FileServer(http.FS(ui.StaticFS)),
         ))
 
-        mux.HandleFunc("GET /", handlers.handlePosts(postsFS))
-        mux.HandleFunc("GET /post/{dir}/{fn}", handlers.handlePost(postsFS))
+        mux.HandleFunc("GET /", handlers.handlePosts(techPostsFS))
+        mux.HandleFunc("GET /post/{dir}/{fn}", handlers.handlePost(techPostsFS))
         mux.HandleFunc("GET /about", handlers.handleAbout(blogFS))
 
         return mux</span>

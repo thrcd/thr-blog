@@ -20,7 +20,7 @@ func TestHandlePosts(t *testing.T) {
 		{
 			// 2024
 			want := func() string {
-				dirs := getSubDirs("content/test/posts")
+				dirs := getSubDirs("content/test/tech")
 				return lastSubString(dirs[0], "/")
 			}
 
@@ -28,7 +28,7 @@ func TestHandlePosts(t *testing.T) {
 			w := httptest.NewRecorder()
 
 			handlers := handlers{templateCache: templateCache}
-			handlers.handlePosts("content/test/posts").ServeHTTP(w, r)
+			handlers.handlePosts("content/test/tech").ServeHTTP(w, r)
 
 			testkit.Check(t, strings.Contains(w.Body.String(), want()), "Should see page section %s in body response", want())
 		}
@@ -75,7 +75,7 @@ func TestHandlePost(t *testing.T) {
 			w := httptest.NewRecorder()
 
 			handlers := handlers{templateCache: templateCache}
-			handlers.handlePost("content/test/posts").ServeHTTP(w, r)
+			handlers.handlePost("content/test/tech").ServeHTTP(w, r)
 			testkit.Check(t, strings.Contains(w.Body.String(), "14 Apr 2024"), "Should find date \"14 Apr 2024\" in body response.")
 		}
 
@@ -89,7 +89,7 @@ func TestHandlePost(t *testing.T) {
 			w := httptest.NewRecorder()
 
 			handlers := handlers{templateCache: templateCache}
-			handlers.handlePost("content/test/posts").ServeHTTP(w, r)
+			handlers.handlePost("content/test/tech").ServeHTTP(w, r)
 			testkit.Check(t, strings.Contains(w.Body.String(), ErrIBrokeSomething.Error()), "Should find date \"14 Apr 2024\" in body response.")
 		}
 	}

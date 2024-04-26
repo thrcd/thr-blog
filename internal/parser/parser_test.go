@@ -16,7 +16,7 @@ func TestParseMarkdown(t *testing.T) {
 		{
 			want := "<h3>lorem ipsum</h3>"
 
-			fileWithMeta, err := blog.Cfs.ReadFile("content/test/posts/2024/lorem-Ipsum.md")
+			fileWithMeta, err := blog.Cfs.ReadFile("content/test/tech/2024/lorem-Ipsum.md")
 			if err != nil {
 				testkit.ErrorT(t, "Should read file with metadata. Got Error: %v", err)
 			}
@@ -33,7 +33,7 @@ func TestParseMarkdown(t *testing.T) {
 		{
 			want := "<h3>lorem ipsum 2</h3>"
 
-			fileWithoutMeta, err := blog.Cfs.ReadFile("content/test/posts/2024/lorem-Ipsum-2.md")
+			fileWithoutMeta, err := blog.Cfs.ReadFile("content/test/tech/2024/lorem-Ipsum-2.md")
 			if err != nil {
 				testkit.ErrorT(t, "Should read file with metadata. Got Error: %v", err)
 			}
@@ -64,7 +64,7 @@ func TestParseMarkdown(t *testing.T) {
 func TestParseMetadata(t *testing.T) {
 	t.Log("Testing markdown parsing and getting metadata.")
 	{
-		fileWithMeta, err := blog.Cfs.ReadFile("content/test/posts/2024/lorem-Ipsum.md")
+		fileWithMeta, err := blog.Cfs.ReadFile("content/test/tech/2024/lorem-Ipsum.md")
 		if err != nil {
 			testkit.ErrorT(t, "Should read file with metadata. Got Error: %v", err)
 		}

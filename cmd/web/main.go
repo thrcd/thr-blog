@@ -8,7 +8,8 @@ import (
 	"time"
 )
 
-const postsFS = "content/blog/posts"
+const techPostsFS = "content/blog/tech"
+
 const blogFS = "content/blog"
 
 func main() {

@@ -10,7 +10,7 @@ func TestGetSubDirs(t *testing.T) {
 	t.Log("Test getting subdirectories from root folder")
 	{
 		root := "content/test"
-		want := "content/test/posts"
+		want := "content/test/tech"
 
 		dirs := getSubDirs(root)
 		args := []any{want, dirs}
