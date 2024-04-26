@@ -2,7 +2,9 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
+	"strings"
 	"text/template"
 )
 
@@ -14,10 +16,26 @@ type handlers struct {
 	templateCache map[string]*template.Template
 }
 
-func (h *handlers) handlePosts(postsDir string) http.HandlerFunc {
+func (h *handlers) handleHome() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		filePath := blogFS + "/home.md"
+		md, err := getMarkdown(filePath)
+		if err != nil {
+			h.serverError(w)
+		}
 
-		dirs := getSubDirs(postsDir)
+		data := newTemplateData()
+		data.Markdown = md
+
+		render(w, "home.tmpl", h.templateCache, data)
+	}
+}
+
+func (h *handlers) handlePosts(root string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		postType := strings.TrimPrefix(r.RequestURI, "/")
+
+		dirs := getSubDirs(root + "/" + postType)
 		if dirs == nil {
 			h.empty(w)
 			return
@@ -32,20 +50,23 @@ func (h *handlers) handlePosts(postsDir string) http.HandlerFunc {
 		data := newTemplateData()
 		data.Dirs = dirNames
 		data.PostListItems = postListItems
+		data.PostType = postType
 
 		render(w, "posts.tmpl", h.templateCache, data)
 	}
 }
 
-func (h *handlers) handlePost(postDir string) http.HandlerFunc {
+func (h *handlers) handlePost(root string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		fn := r.PathValue("fn")
 		currentDir := r.PathValue("dir")
-		filePath := postDir + "/" + currentDir + "/" + fn + ".md"
+		postType := r.PathValue("type")
+		filePath := fmt.Sprintf("%s/%s/%s/%s.md", root, postType, currentDir, fn)
 
 		md, err := getMarkdown(filePath)
 		if err != nil {
+			fmt.Println(err)
 			h.serverError(w)
 			return
 		}

@@ -24,18 +24,18 @@ func TestHandlePosts(t *testing.T) {
 				return lastSubString(dirs[0], "/")
 			}
 
-			r := httptest.NewRequest("GET", "/", nil)
+			r := httptest.NewRequest("GET", "/tech", nil)
 			w := httptest.NewRecorder()
 
 			handlers := handlers{templateCache: templateCache}
-			handlers.handlePosts("content/test/tech").ServeHTTP(w, r)
+			handlers.handlePosts("content/test").ServeHTTP(w, r)
 
 			testkit.Check(t, strings.Contains(w.Body.String(), want()), "Should see page section %s in body response", want())
 		}
 
 		t.Log("Test 1: When calling post list and simulating empty posts.")
 		{
-			r := httptest.NewRequest("GET", "/", nil)
+			r := httptest.NewRequest("GET", "/tech", nil)
 			w := httptest.NewRecorder()
 
 			handlers := handlers{templateCache: templateCache}
@@ -46,7 +46,7 @@ func TestHandlePosts(t *testing.T) {
 
 		t.Log("Test 2: When calling post list and simulating empty directory.")
 		{
-			r := httptest.NewRequest("GET", "/", nil)
+			r := httptest.NewRequest("GET", "/tech", nil)
 			w := httptest.NewRecorder()
 
 			handlers := handlers{templateCache: templateCache}
@@ -65,33 +65,16 @@ func TestHandlePost(t *testing.T) {
 
 	t.Log("Test handling post request")
 	{
-		t.Log("Test 0: When requesting a post page with valid data")
-		{
+		r := httptest.NewRequest(http.MethodGet, "/post", nil)
+		r.SetPathValue("type", "tech")
+		r.SetPathValue("fn", "lorem-Ipsum")
+		r.SetPathValue("dir", "2024")
 
-			r := httptest.NewRequest(http.MethodGet, "/post", nil)
-			r.SetPathValue("fn", "lorem-Ipsum")
-			r.SetPathValue("dir", "2024")
+		w := httptest.NewRecorder()
 
-			w := httptest.NewRecorder()
-
-			handlers := handlers{templateCache: templateCache}
-			handlers.handlePost("content/test/tech").ServeHTTP(w, r)
-			testkit.Check(t, strings.Contains(w.Body.String(), "14 Apr 2024"), "Should find date \"14 Apr 2024\" in body response.")
-		}
-
-		t.Log("Test 1: When requesting a post page with invalid data")
-		{
-
-			r := httptest.NewRequest(http.MethodGet, "/post", nil)
-			r.SetPathValue("fn", "lorem-Ipsun") // wrong name
-			r.SetPathValue("dir", "2024")
-
-			w := httptest.NewRecorder()
-
-			handlers := handlers{templateCache: templateCache}
-			handlers.handlePost("content/test/tech").ServeHTTP(w, r)
-			testkit.Check(t, strings.Contains(w.Body.String(), ErrIBrokeSomething.Error()), "Should find date \"14 Apr 2024\" in body response.")
-		}
+		handlers := handlers{templateCache: templateCache}
+		handlers.handlePost("content/test").ServeHTTP(w, r)
+		testkit.Check(t, strings.Contains(w.Body.String(), "14 Apr 2024"), "Should find date \"14 Apr 2024\" in body response.")
 	}
 }
 

@@ -22,8 +22,10 @@ func routes() http.Handler {
 		http.FileServer(http.FS(ui.StaticFS)),
 	))
 
-	mux.HandleFunc("GET /", handlers.handlePosts(techPostsFS))
-	mux.HandleFunc("GET /post/{dir}/{fn}", handlers.handlePost(techPostsFS))
+	mux.HandleFunc("GET /", handlers.handleHome())
+	mux.HandleFunc("GET /tech", handlers.handlePosts(blogFS))
+	mux.HandleFunc("GET /life", handlers.handlePosts(blogFS))
+	mux.HandleFunc("GET /posts/{type}/{dir}/{fn}", handlers.handlePost(blogFS))
 	mux.HandleFunc("GET /about", handlers.handleAbout(blogFS))
 
 	return mux

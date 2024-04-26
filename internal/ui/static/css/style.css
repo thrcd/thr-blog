@@ -1,6 +1,6 @@
 body {
     /*margin: 0px;*/
-    font-family: "Roboto", sans-serif;
+    font-family: "Noto Sans Oriya", serif;
     color: #232323;
 
     min-height: 95vh;
@@ -43,7 +43,7 @@ nav > div > h2 > a {
 }
 
 hr {
-    width: 60%;
+    width: 40%;
     border: none;
     height: 0.5px;
     /* Set the hr color */
@@ -56,7 +56,7 @@ main {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    width: 60%;
+    width: 40%;
     color: #232323;
 }
 
@@ -107,16 +107,18 @@ main {
     text-decoration: none;
 }
 
-.post-date {
+.post-meta {
     font-size: 14px;
     margin-top: 20px;
     color: #919191;
 }
 
-.post-tags {
-    margin-top: 10px;
-    color: #919191;
-    font-size: 14px;
+.badge {
+    background-color: #d0d0d0;
+    color: white;
+    padding: 2px 4px;
+    text-align: center;
+    border-radius: 5px;
 }
 
 pre:not(:has(> code)) {

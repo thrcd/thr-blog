@@ -30,6 +30,7 @@ type templateData struct {
 	Markdown      parser.Markdown
 	CurrentDate   time.Time
 	Error         string
+	PostType      string
 }
 
 func newTemplateData() templateData {

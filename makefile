@@ -7,7 +7,6 @@ tests:
 	@go test -v $(shell go list ./... | grep -vE "$(subst $(eval) ,|,$(EXCLUDE_DIRS))") \
 	-cover -coverprofile=coverage.out
 	@echo "Tests completed."
-	@$(MAKE) coverage
 
 coverage:
 	@go tool cover -html=coverage.out -o coverage.html
