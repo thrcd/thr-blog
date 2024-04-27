@@ -19,7 +19,7 @@
                         <a href="/posts/{{$type}}/{{$year}}/{{cleanMarkdownExt $post.Filename}}">{{lowcase $post.Metadata.Title}}</a>
                     </div>
 
-                    <span class="post-list-item-date post-list-inline">- {{humanDate $post.Metadata.Date}}</span>
+                    <span class="post-list-item-date post-list-inline">- {{formatDate $post.Metadata.Date "02 January 2006"}}</span>
                 </div>
             {{end}}
 

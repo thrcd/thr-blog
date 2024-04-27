@@ -74,7 +74,7 @@ func TestHandlePost(t *testing.T) {
 
 		handlers := handlers{templateCache: templateCache}
 		handlers.handlePost("content/test").ServeHTTP(w, r)
-		testkit.Check(t, strings.Contains(w.Body.String(), "14 Apr 2024"), "Should find date \"14 Apr 2024\" in body response.")
+		testkit.Check(t, strings.Contains(w.Body.String(), "14 April 2024"), "Should find date \"14 April 2024\" in body response.")
 	}
 }
 

@@ -106,12 +106,12 @@ func renderError(w http.ResponseWriter, page string, template map[string]*templa
 
 // Template Functions
 
-func humanDate(t time.Time) string {
+func formatDate(t time.Time, format string) string {
 	if t.IsZero() {
 		return ""
 	}
 
-	return t.UTC().Format("02 Jan 2006")
+	return t.UTC().Format(format)
 }
 
 func year(t time.Time) string {
@@ -127,7 +127,7 @@ func lowcase(str string) string {
 }
 
 var functions = template.FuncMap{
-	"humanDate":        humanDate,
+	"formatDate":       formatDate,
 	"cleanMarkdownExt": cleanMarkdownExt,
 	"year":             year,
 	"lowcase":          lowcase,
