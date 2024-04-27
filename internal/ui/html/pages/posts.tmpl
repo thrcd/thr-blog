@@ -2,23 +2,21 @@
     {{$type := .PostType}}
 
     <div class="page-title">
-        <img style="vertical-align:middle"
-             src="/static/img/file-path.svg" width="15">
-        <strong>posts about <u>{{$type}}</u></strong>
+        <strong>Posts about <u>{{$type}}</u></strong>
     </div>
 
     <div>
         {{range $year := .Dirs}}
 
             <div class="post-list-section">
-                <img style="vertical-align:middle" src="../static/img/calendar.png" width="20">
-                <strong style="vertical-align:middle">{{$year}}</strong>
+                <strong>⧗ {{$year}}</strong>
             </div>
 
             {{range $post := index $.PostListItems $year}}
                 <div >
+                    <span class="post-list-inline">∿</span>
                     <div class="post-list-item-title post-list-inline">
-                        <a href="/posts/{{$type}}/{{$year}}/{{cleanMarkdownExt $post.Filename}}"><img style="vertical-align:middle" src="../static/img/pulse.svg" width="10"> {{lowcase $post.Metadata.Title}}</a>
+                        <a href="/posts/{{$type}}/{{$year}}/{{cleanMarkdownExt $post.Filename}}">{{lowcase $post.Metadata.Title}}</a>
                     </div>
 
                     <span class="post-list-item-date post-list-inline">- {{humanDate $post.Metadata.Date}}</span>

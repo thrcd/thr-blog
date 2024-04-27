@@ -1,7 +1,7 @@
 
 Thiago Rodrigues (🇧🇷)
 
-_~some mix of memories, experiences, emotions, thoughts, connections, values and coffee~_
+_~some mix of memories, experiences, emotions, thoughts, connections and coffee~_
 
 I function with [~good~](https://rubycoffeeroasters.com/) coffee
 

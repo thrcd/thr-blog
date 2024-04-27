@@ -1,7 +1,6 @@
 {{define "content"}}
     <div class="post-meta">
-        <img style="vertical-align:middle" src="/static/img/calendar.svg" width="15">
-        {{humanDate .Markdown.Metadata.Date}}
+        ⧖ {{humanDate .Markdown.Metadata.Date}}
     </div>
 
 
@@ -9,12 +8,7 @@
         <div class="post-meta">
             <span>
                 {{range $i, $tag := .}}
-                    <img style="vertical-align:middle" src="/static/img/tag.svg" width="12">
-
-                    <i>
-                        {{$tag}}<br>
-                     </i>
-
+                    ◆ <i>{{$tag}}<br></i>
                 {{end}}
             </span>
         </div>
