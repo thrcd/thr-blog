@@ -72,7 +72,7 @@ var StaticFS, _ = fs.Sub(Files, "static")
 
 // cfs.go
 // Go file at root folder and embeds the content folder, holding all the posts.
-// I'll probably move this to a external storage later. ~maybe~.
+// I'll probably move this to an external storage later. ~maybe~.
 
 //go:embed "content"
 var Cfs embed.FS
