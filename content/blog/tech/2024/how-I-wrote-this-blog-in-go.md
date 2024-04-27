@@ -20,12 +20,13 @@ The final structure ended up like this:
 * content folder:
   - blog:
       about.md
-  - posts:
-      - 2024:
-          - post files *.md
-          .
-          .
-          .
+      home.md
+      - tech:
+          - 2024:
+              - tech post files *.md
+      - life:
+          - 2024:
+              - life post files *.md
   - tests (files to run the tests mocking the blog files)
 ```
 
@@ -63,10 +64,18 @@ I'll start from the bottom up. The ui folder houses all the Go template files (.
 
 ```go
 // mfs.go
+// This is located at ui package and embeds all html and static files
 
 //go:embed "html" "static"
 var Files embed.FS
 var StaticFS, _ = fs.Sub(Files, "static")
+
+// cfs.go
+// Go file at root folder and embeds the content folder, holding all the posts.
+// I'll probably move this to a external storage later. ~maybe~.
+
+//go:embed "content"
+var Cfs embed.FS
 ```
 
 Then I have the parser package. At the beginning, I was writing my own Markdown parser just for fun, but with a new baby at home, time has become more unpredictable, so it's still a work in progress—maybe forever.
@@ -94,7 +103,7 @@ type Markdown struct {
 
 Then I expose two functions:
 
-``` go
+```
 // parser.go
 
 // Custom code to parse only the metadata
@@ -171,25 +180,27 @@ This data function stores the necessary information for my templates. Finally, I
 ```go
 // handlers.go
 
-func (h *handlers) handlePosts(postsDir string) http.HandlerFunc {
+func (h *handlers) handlePosts(root string) http.HandlerFunc
     return func(w http.ResponseWriter, r *http.Request) {
-
-        dirs := getSubDirs(postsDir)
+        postType := strings.TrimPrefix(r.RequestURI, "/")
+        
+        dirs := getSubDirs(root + "/" + postType)
         if dirs == nil {
-            h.empty(w)
-            return
+        h.empty(w)
+        return
         }
-    
+        
         postListItems := getPostListItems(dirs)
-    
+        
         // DirNames represent the subsections on the posts page.
         // In this case, 2024, 2025...
-        dirNames := maps(dirs, func(item string) string { return lastSubString(item) })
-    
+        dirNames := maps(dirs, func(item string) string { return lastSubString(item, "/") })
+        
         data := newTemplateData()
         data.Dirs = dirNames
         data.PostListItems = postListItems
-    
+        data.PostType = postType
+        
         render(w, "posts.tmpl", h.templateCache, data)
     }
 }
@@ -220,9 +231,11 @@ func routes() http.Handler {
     mux.Handle("GET /static/", http.StripPrefix("/static/",
         http.FileServer(http.FS(ui.StaticFS)),
     ))
-    
-    mux.HandleFunc("GET /", handlers.handlePosts(postsFS))
-    mux.HandleFunc("GET /post/{dir}/{fn}", handlers.handlePost(postsFS))
+
+    mux.HandleFunc("GET /", handlers.handleHome())
+    mux.HandleFunc("GET /tech", handlers.handlePosts(blogFS))
+    mux.HandleFunc("GET /life", handlers.handlePosts(blogFS))
+    mux.HandleFunc("GET /posts/{type}/{dir}/{fn}", handlers.handlePost(blogFS))
     mux.HandleFunc("GET /about", handlers.handleAbout(blogFS))
     
     return mux
@@ -257,6 +270,11 @@ func main() {
     os.Exit(1)
 }
 ```
+
+In the future ~probably never~, if I want to add another post section, such as 'coffee' or 'music,'
+all I have to do is create a new folder in content/blog/, like content/blog/music/2024/, 
+and add a new route to the routes function. There are hundreds of smarter ways to do this, 
+but this was the best I could do with the time available. It's working, it's simple, and I like it.
 
 After all this, you run the command:
 
