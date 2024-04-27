@@ -21,16 +21,16 @@ Every folder inside the "posts" folder will be a section on the posts page. And 
 
 ```
 * content folder:
-    - blog:
-        about.md
-        - posts:
-            - 2024:
-                - post files *.md
-                .
-                .
-                .
-
-    - tests (files to run the tests mocking the blog files)
+  - blog:
+      about.md
+      home.md
+      - tech:
+          - 2024:
+              - tech post files *.md
+      - life:
+          - 2024:
+              - life post files *.md
+  - tests (files to run the tests mocking the blog files)
 ```
 
 Then, I start every Markdown file with a simple metadata section:
