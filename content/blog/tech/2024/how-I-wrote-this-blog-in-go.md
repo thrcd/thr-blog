@@ -1,7 +1,7 @@
 +++
 title = "How I wrote this blog in go"
 date = "2024-04-22"
-tags = ["go version 1.22.0"]
+tags = ["Go version=1.22.0"]
 +++
 
 I've been writing my whole life. Most of the time, I write on paper, but I also have a blog-like setup running on my Raspberry Pi for the last 5-6 years. This is a place where I store everything that's on my mind to read later.
