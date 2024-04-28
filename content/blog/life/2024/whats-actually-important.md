@@ -7,7 +7,7 @@ Over the past year, it feels like I've been constantly on the move—but not in 
 Instead, I've been caught up in a whirlwind of stuff that seemed urgent or important.
 
 From working my 8-to-4 job to pursuing hobbies, learning new things, studying, and working on personal projects, my days, and hours have been jam-packed.
-This week, a 2:45min drive to Chicago gave me nearly three hours of alone time on the highway, I had a moment to reflect.
+This week, driving to Chicago, I had nearly three hours of alone time on the highway, giving me a moment to reflect.
 
 As I drove, I couldn't help but think about everything I've been doing lately. I started to question myself: What really matters? 
 It's funny how the things we tend to overlook are often the most important. When life gets tough, it's those neglected priorities that suddenly become crystal clear.
