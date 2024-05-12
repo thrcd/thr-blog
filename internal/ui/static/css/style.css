@@ -3,7 +3,7 @@
 }
 
 body {
-    font-family: "Noto Sans Oriya", serif;
+    /* font-family: "Noto Sans Oriya", serif; */
     color: var(--color);
     background-color: var(--background-color);
     min-height: 95vh;

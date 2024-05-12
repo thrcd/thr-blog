@@ -8,10 +8,6 @@ tests:
 	-cover -coverprofile=coverage.out
 	@echo "Tests completed."
 
-coverage:
-	@go tool cover -html=coverage.out -o coverage.html
-	@echo "Coverage report generated: coverage.html"
-
 dev:
 	@go run ./cmd/web
 
